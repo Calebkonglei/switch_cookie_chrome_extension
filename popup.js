@@ -63,3 +63,4 @@ chrome.tabs.getSelected(null, function(tab){
   }) 
 }
 document.addEventListener('DOMContentLoaded', init);
+
