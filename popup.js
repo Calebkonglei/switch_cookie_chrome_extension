@@ -2,24 +2,11 @@ var url = '';
 function $(id){
   return document.getElementById(id);
 }
-// function checkCookie(url){
-//   chrome.cookies.getAll({
-//     'url':url,
-//   },function(cookies){
-//     var i=0, len=cookies.length, cookie=[];
-//     for(;i<len;i++){
-//       var cookieMsg={
-//         name:cookie[i].name,
-//         value:cookie[i].value
-//       }
-//       cookie.push(cookieMsg);
-//     }
-//     cookie.some(function(item){
 
-//     })
-//   })
-  
-// }
+
+// function checkCookie(ele, index, array){
+//   return ele.name=='x-server-env' && ele.value=='test';
+// } 
 
 //设置当前页面cookie，name='x-server-env', value='test'
 function setTestCookie(url,name,value){
@@ -46,21 +33,27 @@ function removeTestCookie(url,name){
   chrome.cookies.remove(cookie);
 };
 
-  //获取当前页面url根目录，如http://www.baidu.com/
+chrome.cookies.get({
+    'url':url,
+    'name':'x-server-env',
+  },function(cookie){
+    cookie == null ? $('checkBox').checked=true : $('checkBox').checked=false;
+ });
+
+function init(){ 
+ //获取当前页面url根目录，如http://www.baidu.com/
 chrome.tabs.getSelected(null, function(tab){
   url=tab.url.split('//')[0]+'//'+tab.url.split('/')[2]+'/';
-  $('cook').innerText=url;
+  $('cook').value=url;
 });
-
-function init(){
  $('checkBox').addEventListener('click',function(e){
-      var status=e.target.checked;
-      var URL = $('cook').innerText.toString();
-      if(status==true){
-        setTestCookie(URL,'x-server-env', 'test');
-      }else{
-        removeTestCookie(URL, 'x-server-env');
-      }
+    $('cooks').innerText=url;
+    var status=e.target.checked;     
+    if(status==true){
+      setTestCookie(url,'x-server-env','test');
+    }else{
+      removeTestCookie(url,'x-server-env');
+    }
   }) 
 }
 document.addEventListener('DOMContentLoaded', init);

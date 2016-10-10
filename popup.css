@@ -14,7 +14,7 @@
 	width:400px;
 	height:50px;
 	line-height: 50px;
-	font-size: 18px;
+	font-size: 14px;
 }
 .check{
 	display: inline-block;
@@ -27,7 +27,8 @@
 	line-height: 20px;
 }
 #cook{
-	display: block;
-	width:auto;
-	height:200px;
+	display: inline-block;
+	width:200px;
+	height:30px;
+	font-size: 14px;
 }
