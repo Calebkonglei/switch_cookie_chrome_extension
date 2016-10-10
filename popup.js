@@ -38,13 +38,13 @@ function setTestCookie(url,name,value){
 };
 
 //删除设置的x-server-env cookie
-// function removeTestCookie(url,name){
-//   var cookie={
-//     'url':url,
-//     'name':name,
-//   }
-//   chrome.cookies.remove(cookie);
-// };
+function removeTestCookie(url,name){
+  var cookie={
+    'url':url,
+    'name':name,
+  }
+  chrome.cookies.remove(cookie);
+};
 
   //获取当前页面url根目录，如http://www.baidu.com/
 chrome.tabs.getSelected(null, function(tab){
@@ -57,9 +57,9 @@ function init(){
       var status=e.target.checked;
       var URL = $('cook').innerText.toString();
       if(status==true){
-        setCookie(URL,'x-server-env', 'test');
+        setTestCookie(URL,'x-server-env', 'test');
       }else{
-        setCookie(URL, 'x-server-env', 'test');
+        removeTestCookie(URL, 'x-server-env');
       }
   }) 
 }
