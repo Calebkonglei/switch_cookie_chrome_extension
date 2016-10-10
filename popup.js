@@ -3,11 +3,32 @@ function $(id){
   return document.getElementById(id);
 }
 
-
-// function checkCookie(ele, index, array){
-//   return ele.name=='x-server-env' && ele.value=='test';
-// } 
-
+function checkBox(url){
+  var cookieDetail={
+    'url':url,
+    'name':'x-server-env',
+  };
+  chrome.cookies.get(cookieDetail,function(cookie){
+    if(cookie){
+      $('checkBox').checked=true;
+      $('cooks').innerText="测试环境启用中...";
+    }else{
+      $('checkBox').checked=false;
+      $('cooks').innerText="测试环境已关闭";
+    }
+ });
+}
+//checkBox 选中状态相关事件 
+function checkBoxStatus(e){
+  var status=e.target.checked;     
+  if(status==true){
+    $('cooks').innerText="开启测试环境...";
+    setTestCookie(url,'x-server-env','test');
+  }else{
+    $('cooks').innerText="关闭测试环境...";
+    removeTestCookie(url,'x-server-env');
+  }
+}
 //设置当前页面cookie，name='x-server-env', value='test'
 function setTestCookie(url,name,value){
   var time = new Date();
@@ -33,27 +54,16 @@ function removeTestCookie(url,name){
   chrome.cookies.remove(cookie);
 };
 
-chrome.cookies.get({
-    'url':url,
-    'name':'x-server-env',
-  },function(cookie){
-    cookie == null ? $('checkBox').checked=true : $('checkBox').checked=false;
- });
-
 function init(){ 
- //获取当前页面url根目录，如http://www.baidu.com/
+//获取当前页面url根目录，如http://www.baidu.com/
 chrome.tabs.getSelected(null, function(tab){
-  url=tab.url.split('//')[0]+'//'+tab.url.split('/')[2]+'/';
+  url=tab.url.split('//')[0]+'//'+tab.url.split('/')[2];
   $('cook').value=url;
+  checkBox(tab.url);
 });
+
  $('checkBox').addEventListener('click',function(e){
-    $('cooks').innerText=url;
-    var status=e.target.checked;     
-    if(status==true){
-      setTestCookie(url,'x-server-env','test');
-    }else{
-      removeTestCookie(url,'x-server-env');
-    }
+    checkBoxStatus(e);   
   }) 
 }
 document.addEventListener('DOMContentLoaded', init);
