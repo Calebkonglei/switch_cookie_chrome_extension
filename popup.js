@@ -11,10 +11,8 @@ function checkBox(url){
   chrome.cookies.get(cookieDetail,function(cookie){
     if(cookie){
       $('checkBox').checked=true;
-      $('cooks').innerText="测试环境启用中...";
     }else{
       $('checkBox').checked=false;
-      $('cooks').innerText="测试环境已关闭";
     }
  });
 }
@@ -22,10 +20,8 @@ function checkBox(url){
 function checkBoxStatus(e){
   var status=e.target.checked;     
   if(status==true){
-    $('cooks').innerText="开启测试环境";
     setTestCookie(url,'x-server-env','test');
   }else{
-    $('cooks').innerText="关闭测试环境";
     removeTestCookie(url,'x-server-env');
   }
 }
