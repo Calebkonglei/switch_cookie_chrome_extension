@@ -62,12 +62,7 @@ function init(){
     checkBox(tab.url);
   });
  var id=chrome.extension.getBackgroundPage().a();
- if(id){
-  $('tag').setAttribute('href','https://web.umeng.com/main.php?c=site&a=frame&siteid='+id+'');
- } else{
-  $('tag').innerText='';
- }
-
+ $('tag').setAttribute('href','https://web.umeng.com/main.php?c=site&a=frame&siteid='+id+'');
  $('checkBox').addEventListener('click',function(e){
     checkBoxStatus(e); 
   })

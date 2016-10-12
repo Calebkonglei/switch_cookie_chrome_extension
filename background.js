@@ -9,7 +9,7 @@ var a=function(){
   if(id){
     return id;
   }else{
-    return false;
+    return 'false';
   }
   
 }
