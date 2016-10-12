@@ -7,6 +7,9 @@
     "matches":["http://*/*", "https://*/*"],
     "js":["contentScript.js"]
     }],
+  "icons":{
+    "64":"icon.png"
+  },
   "background":{
     "scripts":["background.js"]
   },
