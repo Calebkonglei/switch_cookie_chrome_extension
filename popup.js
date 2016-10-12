@@ -3,6 +3,10 @@ function $(id){
   return document.getElementById(id);
 }
 
+// function redirectPage(id){
+//   chrome.tabs.executeScript(null,
+//     {code:"window.location.href='" + id + "'"});
+// }
 function checkBox(url){
   var cookieDetail={
     'url':url,
@@ -52,15 +56,21 @@ function removeTestCookie(url,name){
 
 function init(){ 
 //获取当前页面url根目录，如http://www.baidu.com/
-chrome.tabs.getSelected(null, function(tab){
-  url=tab.url.split('//')[0]+'//'+tab.url.split('/')[2];
-  $('cook').value=url;
-  checkBox(tab.url);
-});
+  chrome.tabs.getSelected(null, function(tab){
+    url=tab.url.split('//')[0]+'//'+tab.url.split('/')[2];
+    $('cook').value=url;
+    checkBox(tab.url);
+  });
+ var id=chrome.extension.getBackgroundPage().a();
+ if(id){
+  $('tag').setAttribute('href','https://web.umeng.com/main.php?c=site&a=frame&siteid='+id+'');
+ } else{
+  $('tag').innerText='';
+ }
 
  $('checkBox').addEventListener('click',function(e){
-    checkBoxStatus(e);   
-  }) 
+    checkBoxStatus(e); 
+  })
 }
 document.addEventListener('DOMContentLoaded', init);
 

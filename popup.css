@@ -1,13 +1,10 @@
-.test, .txt{
+.test, .txt,#tag_a{
   font-family: "PingFang SC", "Microsoft YaHei", "Helvetica Neue", Helvetica, "Hiragino Sans GB", "\5FAE\8F6F\96C5\9ED1", Arial, sans-serif;
 }
 .test{
 	width:340px;
-	height:50px;
-	line-height: 50px;
 	background-color: #000;
 	color:#fff;
-	font-size: 20px;
 	text-align: center;
 }
 .txt{
@@ -16,11 +13,9 @@
 	display: inline-block;
 	padding-left: 10px;
 }
-
-#checkBox{
-	width:20px;
-	height:20px;
-	line-height: 20px;
+#tag_a{
+    font-size: 14px;
+    padding-left: 10px;
 }
 #cook{
 	display: inline-block;
@@ -35,7 +30,7 @@
 	width:50px;
 	height:25px;
 	display: inline-block;
-    margin-left: 20px;
+    margin-left: 150px;
 }
 .switch{   
     display:none;   

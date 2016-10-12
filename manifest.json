@@ -3,14 +3,20 @@
   "version": "1.0",
   "manifest_version": 2,
   "description": "通过切换按钮，启用关闭测试环境",
-  
+  "content_scripts":[{
+    "matches":["http://*/*", "https://*/*"],
+    "js":["contentScript.js"]
+    }],
+  "background":{
+    "scripts":["background.js"]
+  },
   "permissions": [
     "tabs", "cookies", "http://*/*", "https://*/*", "background"
   ],
- 
+  
   "browser_action": {
     "default_icon": "icon.png",
     "default_title": "测试吧",
-	"default_popup": "popup.html"
+	  "default_popup": "popup.html"
   }
 }
