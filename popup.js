@@ -3,30 +3,20 @@ function $(id){
   return document.getElementById(id);
 }
 
-// function redirectPage(id){
-//   chrome.tabs.executeScript(null,
-//     {code:"window.location.href='" + id + "'"});
-// }
-function checkBox(url){
-  var cookieDetail={
-    'url':url,
-    'name':'x-server-env',
-  };
-  chrome.cookies.get(cookieDetail,function(cookie){
+function checkBox(cookie,url){  
     if(cookie){
       $('checkBox').checked=true;
     }else{
       $('checkBox').checked=false;
     }
- });
 }
 //checkBox 选中状态相关事件 
-function checkBoxStatus(e){
-  var status=e.target.checked;     
-  if(status==true){
-    setTestCookie(url,'x-server-env','test');
+function checkBoxState(e){
+  var state=e.target.checked;     
+  if(state==true){
+    setTestCookie(url,'x_server_env','test');
   }else{
-    removeTestCookie(url,'x-server-env');
+    removeTestCookie(url,'x_server_env');
   }
 }
 //设置当前页面cookie，name='x-server-env', value='test'
@@ -55,16 +45,13 @@ function removeTestCookie(url,name){
 };
 
 function init(){ 
-//获取当前页面url根目录，如http://www.baidu.com/
-  chrome.tabs.getSelected(null, function(tab){
-    url=tab.url.split('//')[0]+'//'+tab.url.split('/')[2];
-    $('cook').value=url;
-    checkBox(tab.url);
-  });
- var id=chrome.extension.getBackgroundPage().a();
+ var id = chrome.extension.getBackgroundPage().a();
+ var cookie = chrome.extension.getBackgroundPage().x_server_env_cookie;
+ url = chrome.extension.getBackgroundPage().url;
+ checkBox(cookie, url);
  $('tag').setAttribute('href','https://web.umeng.com/main.php?c=site&a=frame&siteid='+id+'');
  $('checkBox').addEventListener('click',function(e){
-    checkBoxStatus(e); 
+    checkBoxState(e); 
   })
 }
 document.addEventListener('DOMContentLoaded', init);
