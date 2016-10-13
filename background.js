@@ -5,12 +5,13 @@ chrome.extension.onMessage.addListener(
     id.push(request.id);
   }
 );
-var a=function(){
+var getId=function(){
     return id; 
 }
 
 var x_server_env_cookie;
 var url;
+var checked;
 function updateCookie() {
   chrome.tabs.getSelected(null, function(tab){
     url = tab.url.split('//')[0]+'//'+tab.url.split('/')[2];
@@ -20,9 +21,11 @@ function updateCookie() {
     };
     chrome.cookies.get(cookieDetail, function(cookie){
       if (cookie) {
+        checked=true;
         x_server_env_cookie = cookie;
         chrome.browserAction.setIcon({'path':'icon.png'})
       } else {
+        checked=false;
         chrome.browserAction.setIcon({'path':'icon-off.png'})
       }
     })

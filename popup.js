@@ -3,13 +3,6 @@ function $(id){
   return document.getElementById(id);
 }
 
-function checkBox(cookie,url){  
-    if(cookie){
-      $('checkBox').checked=true;
-    }else{
-      $('checkBox').checked=false;
-    }
-}
 //checkBox 选中状态相关事件 
 function checkBoxState(e){
   var state=e.target.checked;     
@@ -45,10 +38,11 @@ function removeTestCookie(url,name){
 };
 
 function init(){ 
- var id = chrome.extension.getBackgroundPage().a();
+ var id = chrome.extension.getBackgroundPage().getId();
  var cookie = chrome.extension.getBackgroundPage().x_server_env_cookie;
+ var checked = chrome.extension.getBackgroundPage().checked;
  url = chrome.extension.getBackgroundPage().url;
- checkBox(cookie, url);
+ $('checkBox').checked = checked;
  $('tag').setAttribute('href','https://web.umeng.com/main.php?c=site&a=frame&siteid='+id+'');
  $('checkBox').addEventListener('click',function(e){
     checkBoxState(e); 
