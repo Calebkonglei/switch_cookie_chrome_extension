@@ -2,13 +2,32 @@ var url = '';
 function $(id){
   return document.getElementById(id);
 }
-
+function updateCookie() {
+  chrome.tabs.getSelected(null, function(tab){
+    url = tab.url.split('//')[0]+'//'+tab.url.split('/')[2];
+    var cookieDetail = {
+      url: tab.url,
+      name: 'x_server_env',
+    };
+    chrome.cookies.get(cookieDetail, function(cookie){
+      if (cookie) {
+        $('checkBox').checked=true;
+        chrome.browserAction.setIcon({'path':'icon.png'})
+      } else {
+        $('checkBox').checked=false;
+        chrome.browserAction.setIcon({'path':'icon-off.png'})
+      }
+    })
+  });
+ }
 //checkBox 选中状态相关事件 
 function checkBoxState(e){
   var state=e.target.checked;     
   if(state==true){
+    chrome.browserAction.setIcon({'path':'icon.png'});
     setTestCookie(url,'x_server_env','test');
   }else{
+    chrome.browserAction.setIcon({'path':'icon-off.png'});
     removeTestCookie(url,'x_server_env');
   }
 }
@@ -39,14 +58,19 @@ function removeTestCookie(url,name){
 
 function init(){ 
  var id = chrome.extension.getBackgroundPage().getId();
- var cookie = chrome.extension.getBackgroundPage().x_server_env_cookie;
- var checked = chrome.extension.getBackgroundPage().checked;
- url = chrome.extension.getBackgroundPage().url;
- $('checkBox').checked = checked;
+ chrome.tabs.onSelectionChanged.addListener(updateCookie);
+ chrome.tabs.onUpdated.addListener(updateCookie);
+ // var cookie = chrome.extension.getBackgroundPage().x_server_env_cookie;
+ // var checked = chrome.extension.getBackgroundPage().checked;
+ // url = chrome.extension.getBackgroundPage().url;
+ //  $('checkBox').checked=checked;
+ updateCookie()
  $('tag').setAttribute('href','https://web.umeng.com/main.php?c=site&a=frame&siteid='+id+'');
  $('checkBox').addEventListener('click',function(e){
-    checkBoxState(e); 
+    checkBoxState(e);
   })
 }
 document.addEventListener('DOMContentLoaded', init);
+
+
 
